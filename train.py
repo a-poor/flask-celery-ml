@@ -13,8 +13,8 @@ print("Building & training model...")
 model = LogisticRegression(max_iter=100_000)
 model.fit(X,y)
 
-print("Saving model to \"{MODEL_PATH}\"...")
-with open(MODEH_PATH,"w") as f:
+print(f"Saving model to \"{MODEL_PATH}\"...")
+with open(MODEL_PATH,"wb") as f:
     pickle.dump(model,f)
 
 print("Done.")
