@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  redis:
+    image: redis
+    volumes:
+      - "redis_data:data"
+    ports:
+      - "6379:6379"
+		restart: "always"
+	celery:
+		image: python:3.8 
+		depends_on:
+			- "redis"
+		environment:
+			- "CELERY_BROKER_URL=redis://redis"
+		restart: "always"
+	app:
+		build: .	
+		ports:
+			- "5000:5000"
+		depends_on:
+			- "redis"
+			- "celery"
+		restart: "always"
+volumes:
+	redis_data:
+
