@@ -4,7 +4,7 @@ function getFormData() {
 	const inputs = [...form.getElementsByTagName("input")]
 		.filter(i => i.type == "range")
 		.reduce((a,b) => {
-			a[b.name] = `${(parseFloat(b.value)*100).toFixed(4)}%`;
+			a[b.name] = parseFloat(b.value);
 			return a;
 		},{});
 	return inputs;
@@ -21,9 +21,9 @@ function updateResults(preds = {}) {
 	const set = document.getElementById("pred-pct-set");
 	const ver = document.getElementById("pred-pct-ver");
 	const vir = document.getElementById("pred-pct-vir");
-	set.textContent = preds['setosa'] || "Unknown";
-	ver.textContent = preds['versicolor'] || "Unknown";
-	vir.textContent = preds['virginica'] || "Unknown";
+	set.textContent = preds['setosa'] ? `${(parseFloat(preds.setosa)*100).toFixed(4)}%` | "";
+	ver.textContent = preds['versicolor'] ? `${(parseFloat(preds.versicolor)*100).toFixed(4)}%` | "";
+	vir.textContent = preds['virginica'] ? `${(parseFloat(preds.virginica)*100).toFixed(4)}%` | "";
 }
 
 async function postData(url, data) {
