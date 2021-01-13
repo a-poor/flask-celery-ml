@@ -7,17 +7,15 @@
 		<h1>ML Model Predictions in a Sample Flask App</h1>
 		<p>
 			This is a simple flask app that serves as a demo for making ML model predictions inside
-			<br/>
 			a Flask app, without saccrificing performance.
-			<br/>
+		</p>
+		<p>
 			The demo uses logistic regression to make simple predictions for the Iris dataset.
-			<br/>
+		</p>
+		<p>
 			The flask app doesn't perform any predictions and instead passes the model inference to
-			<br/>
 			a Celery worker (with a Redis backend). There is one api endpoint to schedule a prediction
-			<br/>
 			which returns an address where the result will be stored. The site will poll the result
-			<br/>
 			endpoint, checking for results until the status changes to <code>SUCCESS</code> or 
 			<code>ERROR</code>.
 		</p>

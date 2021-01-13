@@ -21,9 +21,9 @@ function updateResults(preds = {}) {
 	const set = document.getElementById("pred-pct-set");
 	const ver = document.getElementById("pred-pct-ver");
 	const vir = document.getElementById("pred-pct-vir");
-	set.textContent = preds['setosa'] ? `${(parseFloat(preds.setosa)*100).toFixed(4)}%` | "";
-	ver.textContent = preds['versicolor'] ? `${(parseFloat(preds.versicolor)*100).toFixed(4)}%` | "";
-	vir.textContent = preds['virginica'] ? `${(parseFloat(preds.virginica)*100).toFixed(4)}%` | "";
+	set.textContent = preds['setosa'] ? `${(parseFloat(preds.setosa)*100).toFixed(4)}%` : "";
+	ver.textContent = preds['versicolor'] ? `${(parseFloat(preds.versicolor)*100).toFixed(4)}%` : "";
+	vir.textContent = preds['virginica'] ? `${(parseFloat(preds.virginica)*100).toFixed(4)}%` : "";
 }
 
 async function postData(url, data) {
