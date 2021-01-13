@@ -7,7 +7,7 @@ from celery import Celery
 MODEL_PATH = "model.pkl"
 
 papp = Celery(
-    "model_predict",
+    "predict",
     broker="redis://redis"
 )
 
@@ -25,13 +25,19 @@ def transform_data(input_data: dict):
         'petal-width': 1.20
     }
     data = {**defaults,**input_data}
-    return np.array([
+    return np.array([[
         data[k] for k in defaults.keys()
-    ])
+    ]])
+
+def get_predictions(model,data):
+    TARGETS = ['setosa','versicolor','virginica']
+    preds = model.predict_proba(data)
+    return dict(zip(TARGETS,preds[0]))
 
 @papp.task
 def predict(input_data: dict):
     model = load_model(MODEL_PATH)
     data = transform_data(input_data)
-    return ""
+    preds = get_predictions(model,data)
+    return preds
 
