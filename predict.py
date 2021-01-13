@@ -8,7 +8,8 @@ MODEL_PATH = "model.pkl"
 
 papp = Celery(
     "predict",
-    broker="redis://redis"
+    broker="redis://redis:6379/0",
+    backend="redis://redis:6379/0"
 )
 
 
@@ -19,10 +20,10 @@ def load_model(path: str):
 def transform_data(input_data: dict):
     # Mean value for each column
     defaults = { 
-        'sepal-length': 5.84,
-        'sepal-width': 3.06,
-        'petal-length': 3.76,
-        'petal-width': 1.20
+        'sepal_length': 5.84,
+        'sepal_width': 3.06,
+        'petal_length': 3.76,
+        'petal_width': 1.20
     }
     data = {**defaults,**input_data}
     return np.array([[

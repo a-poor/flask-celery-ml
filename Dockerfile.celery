@@ -5,4 +5,4 @@ COPY model.pkl .
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
-CMD celery -A predict worker
+CMD celery -A predict worker -l INFO 

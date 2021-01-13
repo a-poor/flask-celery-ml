@@ -1,9 +1,70 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>ML Prediction Test</title>
 	</head>
 	<body>
-		<h1>Welcome to My Fake App</h1>
-		<p>Test test test test</p>
+		<h1>ML Model Predictions in a Sample Flask App</h1>
+		<p>
+			This is a simple flask app that serves as a demo for making ML model predictions inside
+			<br/>
+			a Flask app, without saccrificing performance.
+			<br/>
+			The demo uses logistic regression to make simple predictions for the Iris dataset.
+			<br/>
+			The flask app doesn't perform any predictions and instead passes the model inference to
+			<br/>
+			a Celery worker (with a Redis backend). There is one api endpoint to schedule a prediction
+			<br/>
+			which returns an address where the result will be stored. The site will poll the result
+			<br/>
+			endpoint, checking for results until the status changes to <code>SUCCESS</code> or 
+			<code>ERROR</code>.
+		</p>
+		<form id="prediction-form">
+			<h3>Predicting Class of Iris Using Petal & Sepal Size</h3>
+			<table>
+				<tr>
+					<td><label for="sepal_length">sepal length (cm)</label></td>
+					<td><input type="range" id="sepal_length" name="sepal_length" step="0.01" min="4.3" value="5.8" max="7.9" oninput="val_sl.value=sepal_length.value"/></td>
+					<td><output name="val_sl" for="sepal_length"/>5.8</output></td>
+		  	</tr>	
+				<tr>
+					<td><label for="sepal_width">sepal width (cm)</label></td>
+					<td><input type="range" id="sepal_width" name="sepal_width" step="0.01" min="2" value="3.1" max="4.4" oninput="val_sw.value=sepal_width.value"/></td>
+					<td><output name="val_sw" for="sepal_width"/>3.1</output></td>
+				</tr>
+				<tr>
+					<td><label for="petal_length">petal length (cm)</label>			
+					<td><input type="range" id="petal_length" name="petal_length" step="0.01" min="1" value="3.8"	max="6.9" oninput="val_pl.value=petal_length.value"/>
+					<td><output name="val_pl" for="petal_length"/>3.8</output>
+		  	</tr>
+				<tr>
+					<td><label for="petal_width">petal width (cm)</label></td>
+					<td><input type="range" id="petal_width" name="petal_width" step="0.01" min="0.1" value="1.2" max="2.5" oninput="val_pw.value=petal_width.value"/></td>
+					<td><output name="val_pw" for="petal_width"/>1.2</output></td>
+		  	</tr>	
+				<tr>
+					<td><input type="button" value="Predict" onclick="makePrediction();"/></td>
+				<tr>
+			</table>
+		</form>
+		
+		<div class="prediction-results">
+			<h3>Results</h3>
+			<p>Status: <i><span id="prediction-status">None</span></i></p>
+			<table>
+				<thead>
+					<tr><th>Iris Species</th><th>Probability %</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Setosa</td><td><div id="pred-pct-set"></div></td></tr>
+					<tr><td>Versicolor</td><td><div id="pred-pct-ver"></div></td></tr>
+					<tr><td>Virginica</td><td><div id="pred-pct-vir"></div></td></tr>
+				</tbody>
+			</table>
+		</div>
+			
+		<script src="{{ url_for('static',filename='script.js') }}"></script>
 	</body>
 </html>
